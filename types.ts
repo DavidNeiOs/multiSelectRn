@@ -7,3 +7,8 @@ export type SwitchColorOptions = {
 	false: string,
 	true: string
 }
+
+export interface IShift {
+  start: string;
+  end: string;
+}

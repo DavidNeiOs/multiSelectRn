@@ -12,29 +12,8 @@ import {
 
 import { OptionObject } from "./types";
 import { MultiSelect } from "./components/multiselect";
-
-const OPTIONS: OptionObject[] = [
-  {
-    key: "1",
-    label: "From 0000 To 0600"
-  },
-  {
-    key: "2",
-    label: "From 1000 To 1600"
-  },
-  {
-    key: "3",
-    label: "From 1200 To 1800"
-  },
-  {
-    key: "4",
-    label: "From 1600 To 2359"
-  },
-  {
-    key: "5",
-    label: "From 2000 To 2359"
-  }
-];
+import { usershifts, globalShiftList } from "./data/shifts";
+import { getAvailableShifts, getShiftOptions } from "./utils/shifts";
 
 export default function App() {
   let [selected, setSelected] = useState<string[]>([]);
@@ -51,6 +30,9 @@ export default function App() {
       setSelected([...selected, key]);
     }
   };
+
+  const shiftsToSelect = getAvailableShifts(usershifts, globalShiftList);
+  const options = getShiftOptions(shiftsToSelect);
   return (
     <SafeAreaView style={SCREEN}>
       <ScrollView style={CONTAINER}>
@@ -58,7 +40,7 @@ export default function App() {
           <Text style={TITLE}>Select Available Shifts</Text>
         </View>
         <MultiSelect
-          options={OPTIONS}
+          options={options}
           selected={selected}
           onSelect={onSelectedValue}
         />
